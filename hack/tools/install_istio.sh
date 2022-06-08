@@ -5,12 +5,10 @@
 
 source ./common.sh
 
-export ISTIO_VERSION=${ISTIO_VERSION:=1.8.0}
+header_text "Checking for bin/istioctl ${ISTIO_VERSION}"
+[[ -f bin/istioctl && `bin/istioctl version --remote=false` == ${ISTIO_VERSION} ]] && exit 0
 
-header_text "Checking for bin/istioctl"
-[[ -f bin/istioctl ]] && exit 0
-
-header_text "Installing bin/istioctl"
+header_text "Installing bin/istioctl ${ISTIO_VERSION}"
 mkdir -p ./bin
 
 curl -sL https://istio.io/downloadIstioctl | sh -
